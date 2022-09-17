@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 public class WelcomeResource {
 
     @GetMapping("/welcome")
-    public String welcome(HttpServletRequest request) {
+    public String welcome(HttpServletRequest request){
         return """
-                Welcome to GApplication
+                Welcome %s to Gira Application
                 """.formatted(request.getRemoteAddr());
     }
 }
