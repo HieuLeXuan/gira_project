@@ -20,11 +20,11 @@ public class OpenApiConfiguration {
                         .title("Gira Application")
                         .description("Service for Education Purpose")
                         .version("v1.0")
-                        .license(new License().name("NO LICENSE").url(""))
+                        .license(new License().name("NO LICENSE").url("https://github.com/HieuLeXuan/gira_project"))
                         .contact(new Contact()
                                 .email("hieulexuan629@gmail.com")
                                 .name("Le Xuan Hieu")
-                                .url("")))
+                                .url("https://github.com/HieuLeXuan/gira_project")))
                 .externalDocs(new ExternalDocumentation()
                         .description("Spring Documentation")
                         .url("https://docs.spring.io/spring-framework/docs/current/reference/html/"));
