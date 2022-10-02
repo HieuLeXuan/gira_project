@@ -1,21 +1,24 @@
 package cybersoft.javabackend.java18.role.service;
 
+import cybersoft.javabackend.java18.common.service.GenericService;
+import cybersoft.javabackend.java18.common.util.GiraMapper;
+import cybersoft.javabackend.java18.role.dto.RoleDTO;
 import cybersoft.javabackend.java18.role.model.Role;
 import cybersoft.javabackend.java18.role.repository.RoleRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.UUID;
 
-public interface RoleService {
-    List<Role> findAll();
-
-    Role save(Role role);
-
+public interface RoleService extends GenericService<Role, RoleDTO, UUID> {
     Role update(Role role, String code);
 
-    void delete(String code);
+    void deleteByCode(String code);
+
+    RoleDTO save(RoleDTO dto);
 }
 
 @Service
@@ -29,16 +32,8 @@ class RoleServiceImpl implements RoleService {
     @Autowired
     RoleRepository roleRepository;
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Role> findAll() {
-        return roleRepository.findAll();
-    }
-
-    @Override
-    public Role save(Role role) {
-        return roleRepository.save(role);
-    }
+    @Autowired
+    GiraMapper giraMapper;
 
     @Override
     public Role update(Role role, String code) {
@@ -49,7 +44,24 @@ class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void delete(String code) {
+    public void deleteByCode(String code) {
         roleRepository.deleteByCode(code);
+    }
+
+    @Override
+    public RoleDTO save(RoleDTO dto) {
+        Role model = giraMapper.map(dto, Role.class);
+        Role saveModel = roleRepository.save(model);
+        return giraMapper.map(saveModel, RoleDTO.class);
+    }
+
+    @Override
+    public JpaRepository<Role, UUID> getRepository() {
+        return this.roleRepository;
+    }
+
+    @Override
+    public ModelMapper getMapper() {
+        return this.giraMapper;
     }
 }
