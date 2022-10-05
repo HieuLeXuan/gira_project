@@ -10,8 +10,6 @@ public class WelcomeResource {
 
     @GetMapping("/welcome")
     public String welcome(HttpServletRequest request){
-        return """
-                Welcome %s to Gira Application
-                """.formatted(request.getRemoteAddr());
+        return "";
     }
 }
